@@ -1,25 +1,56 @@
 from tkinter import *
+from tkinter import messagebox
 
-class App():
-    def __init__(self, window_name, size='1024x768'):
-        self.window = Tk()
-        self.window.title(window_name)
-        self.window.geometry(size)
+class App(Frame):
+    def __init__(self, root, window_name, size='1024x768'):
+        super().__init__(root)
 
-        self.label = Label(self.window, text="Hello there", font=('Ariel', 14))
-        self.label.grid(row=0, column=0)
+        self.root = root
+        self.root.title(window_name)
 
-        self.button = Button(self.window, text="Click me!", command=self.clicked_button)
-        self.button.grid(row=0, column=1)
+        self._center_window(size)
+        self._create_menu()
+        
+    def hello(self):
+        print('yo yo')
 
-        self.quit = Button(self.window, text="Quit", command=self.window.destroy)
-        self.quit.grid(row=1, column=1)
-    
-    def clicked_button(self):
-        self.label.configure(text='Button clicked!')
-    
-    def run(self):
-        self.window.mainloop()
+    def _center_window(self, size):
+        screen_height = self.root.winfo_screenheight()
+        screen_width = self.root.winfo_screenwidth()
+        window_width, window_height = [int(x) for x in size.split('x')]
+        
+        x = (screen_width - window_width) // 2
+        y = (screen_height - window_height) // 2
 
-app = App("Focus tree")
-app.run()
+        geometry = str(window_width) + 'x' + str(window_height) + '+' + str(x) + '+' + str(y)
+        self.root.geometry(geometry)
+
+    def _create_menu(self):
+        self.menubar = Menu(self.root)
+
+        # create a pulldown menu, and add it to the menu bar
+        self.filemenu = Menu(self.menubar, tearoff=0)
+        self.filemenu.add_command(label="Open", command=self.hello)
+        self.filemenu.add_command(label="Save", command=self.hello)
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label="Exit", command=self.root.quit)
+        self.menubar.add_cascade(label="File", menu=self.filemenu)
+
+        # create more pulldown menus
+        self.editmenu = Menu(self.menubar, tearoff=0)
+        self.editmenu.add_command(label="Cut", command=self.hello)
+        self.editmenu.add_command(label="Copy", command=self.hello)
+        self.editmenu.add_command(label="Paste", command=self.hello)
+        self.menubar.add_cascade(label="Edit", menu=self.editmenu)
+
+        self.helpmenu = Menu(self.menubar, tearoff=0)
+        self.helpmenu.add_command(label="About", command=self.hello)
+        self.menubar.add_cascade(label="Help", menu=self.helpmenu)
+
+        # display the menu
+        self.root.config(menu=self.menubar)    
+
+
+root = Tk()
+app = App(root=root, window_name="Focus tree")
+app.mainloop()
