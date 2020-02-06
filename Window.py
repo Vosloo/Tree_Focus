@@ -10,7 +10,19 @@ class App(Frame):
 
         self._center_window(size)
         self._create_menu()
+
+        self.quit = Button(self.root, text='Quit!', command=self.root.destroy, font=('Arial', 16))
+        self.quit.pack(side='top')
+
+        self.root.bind('<Leave>', self.popup_warning)
+        self.root.bind('<Key-Escape>', self.quit_app)
         
+    def quit_app(self, event):
+        self.root.destroy()
+
+    def popup_warning(self, event):
+        messagebox.showwarning('Warning', 'App left!')
+
     def hello(self):
         print('yo yo')
 
