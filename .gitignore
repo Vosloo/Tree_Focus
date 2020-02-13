@@ -1,1 +1,4 @@
 .vscode/
+gui.ui
+test.ui
+test.py
