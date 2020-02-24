@@ -52,7 +52,7 @@ class MainWindow(QMainWindow):
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setTitle("File")
         self.menuFile.setStyleSheet("background-color:rgb(192,228,82);")
-
+        
         self.setMenuBar(self.menubar)
 
         self.statusbar = QStatusBar(self)

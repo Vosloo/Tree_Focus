@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QLabel, QPushButton
-from PyQt5.QtCore import QRect
-from PyQt5.QtGui import Qt, QPixmap
+from PyQt5.QtCore import QRect, Qt
+from PyQt5.QtGui import QPixmap
 
 
 class Tree(QLabel):
