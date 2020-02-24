@@ -1,7 +1,0 @@
-{
-    "python.pythonPath": "D:\\Gry_i_Programy\\Anaconda\\envs\\FocusTree\\python.exe",
-    "python.condaPath": "D:\\Gry_i_Programy\\Anaconda\\envs\\FocusTree\\",
-    "python.linting.pylintEnabled": false,
-    "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true
-}
