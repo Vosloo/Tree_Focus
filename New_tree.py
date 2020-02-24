@@ -1,13 +1,23 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QLabel, QPushButton
+from PyQt5.QtCore import QRect
+from PyQt5.QtGui import Qt, QPixmap
 
-class Tree(QtWidgets.QLabel):
-    
-    def __init__(self, central_widget):
-        super().__init__(central_widget)
-        self.central_widget = central_widget 
+
+class Tree(QLabel):
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.parent = parent
+
+        self.initialize()
 
     def initialize(self):
-        self.setGeometry(QtCore.QRect(0, 0, self.central_widget.size().width(), self.central_widget.size().height()))
-        self.setAlignment(QtCore.Qt.AlignCenter)
-        self.setPixmap(QtGui.QPixmap("imgs/stage_0.PNG"))
+        self.debug_butt = QPushButton('DEBUG', self)
+        self.debug_butt.move(20, 20)
+
+        self.setGeometry(QRect(
+            0, 0, self.parent.size().width(), self.parent.size().height()
+            ))
+        self.setAlignment(Qt.AlignCenter)
+        self.setPixmap(QPixmap("imgs/stage_0.PNG"))
         self.setObjectName("tree")
