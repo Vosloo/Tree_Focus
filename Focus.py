@@ -4,7 +4,6 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QMenu, QMenuBar, QStatusBar, QAction
     )
-from PyQt5.QtGui import QFont
 from Main_menu import MainMenu
 from New_tree import Tree
 
@@ -26,19 +25,10 @@ class MainWindow(QMainWindow):
         self.create_menubar()
         self.start_main_menu()
 
-    def _set_font(self):
-        font = QFont()
-        font.setFamily("Arial")
-        font.setPointSize(14)
-        font.setBold(True)
-        font.setWeight(75)
-        self.font = font
-
     def setup_window(self, width=900, height=650):
         self.setWindowTitle("Focus")
         self.resize(width, height)
         self.setStyleSheet("background-color:rgb(239,234,150)")
-        self._set_font()
         self._set_icon()
 
     def _set_icon(self):
@@ -52,7 +42,7 @@ class MainWindow(QMainWindow):
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setTitle("File")
         self.menuFile.setStyleSheet("background-color:rgb(192,228,82);")
-        
+
         self.setMenuBar(self.menubar)
 
         self.statusbar = QStatusBar(self)
@@ -82,7 +72,7 @@ class MainWindow(QMainWindow):
         self.menubar.addAction(self.menuFile.menuAction())
 
     def start_main_menu(self):
-        self.main_menu = MainMenu(self.font, self)
+        self.main_menu = MainMenu(self)
         self.setCentralWidget(self.main_menu)
 
         self.main_menu.button_new_tree.clicked.connect(self.new_tree)
