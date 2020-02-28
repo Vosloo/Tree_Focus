@@ -1,5 +1,5 @@
 .vscode/*
 __pycache__/*
-gui.ui
+uis/*
 test.ui
 test.py
