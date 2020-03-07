@@ -85,8 +85,6 @@ class MainWindow(QMainWindow):
         self.tree = Tree(self)
         self.setCentralWidget(self.tree)
 
-        self.tree.query.back_button.clicked.connect(self.start_main_menu)
-
     def forest(self):
         print('Forest')
 

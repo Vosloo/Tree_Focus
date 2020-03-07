@@ -21,6 +21,8 @@ class Query(QComboBox):
 
         self.initialize_connections()
 
+        self.setFocus()
+
     def set_font(self, name="Arial", size=14, bold=True) -> QFont:
         font = QFont()
         font.setFamily(name)
@@ -93,7 +95,9 @@ class Query(QComboBox):
 
     def initialize_connections(self):
         self.activated.connect(self.query_option)
+
         self.ok_button.clicked.connect(self.activate_tree)
+        self.back_button.clicked.connect(self.back_to_menu)
 
     def query_option(self):
         if self.currentIndex() == self.items_count - 1:
@@ -105,14 +109,27 @@ class Query(QComboBox):
     def input_custom(self):
         current_text = self.currentText()
         if (self.currentIndex() == self.items_count - 1 and
-                current_text[:8] != self.custom_text):
-            self.setCurrentText(self.custom_text + current_text[7:])
+                current_text[:len(self.custom_text)] != self.custom_text):
+
+            if ':' in current_text:
+                splitted_text = current_text.split(':')
+            elif current_text == 'Custom ':
+                splitted_text = current_text.split(' ')
+            else:
+                splitted_text = current_text.split()
+            self.setCurrentText(self.custom_text + splitted_text[1].strip())
 
     def activate_tree(self):  # Think about better implementation
         self.parent.start_focus(self.currentText())
 
+    def back_to_menu(self):
+        self.parent.back_to_menu()
+
     def keyPressEvent(self, key_event):
         if key_event.key() == Qt.Key_Return:
             self.ok_button.click()
+        elif (key_event.key() == Qt.Key_Backspace and
+                self.currentIndex() != self.items_count - 1):
+            self.back_button.click()
         else:
             super().keyPressEvent(key_event)
