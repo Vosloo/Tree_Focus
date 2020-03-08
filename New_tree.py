@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import (
     QWidget,
+    QMessageBox,
     QHBoxLayout,
     QVBoxLayout
     )
@@ -49,19 +50,6 @@ class Tree(QWidget):
         self.vbox.addWidget(self.query.ok_button, alignment=Qt.AlignCenter)
         self.vbox.addStretch()
 
-    def query_option(self):
-        if self.query.currentIndex() == self.query.items_count - 1:
-            self.query.lineEdit().setReadOnly(False)
-            self.query.currentTextChanged.connect(self.input_custom)
-        else:
-            self.query.lineEdit().setReadOnly(True)
-
-    def input_custom(self):
-        current_text = self.query.currentText()
-        if (self.query.currentIndex() == self.query.items_count - 1 and
-                current_text[:8] != 'Custom: '):
-            self.query.setCurrentText('Custom: ' + current_text[7:])
-
     def back_to_menu(self):
         """Switches back to main menu screen.
             It is called by Query after back button is activated."""
@@ -73,9 +61,20 @@ class Tree(QWidget):
         try:
             self.tree_timer.initialize(time)
         except TimeArgException:
-            # TODO Make it as text aboe query_label
-            print("""Invalid custom time!
-                \rPossible inputs: [value] [m, min, h]""")
+            invalid_message = "Invalid custom time!" + \
+                "\nPossible inputs: [value] [m, min, h]"
+
+            invalid_input = self.create_warning(invalid_message)
+            invalid_input.exec()
+
+    def create_warning(self, text) -> QMessageBox:
+        """Creates pop-up warning window with set text"""
+        warning = QMessageBox()
+        warning.setIcon(QMessageBox.Warning)
+        warning.setWindowTitle("Warning!")
+        warning.setText(text)
+
+        return warning
 
     # def resizeEvent(self, event):
     #     if self.tree_visible:
